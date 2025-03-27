@@ -1,0 +1,23 @@
+---
+import { supportedLanguages } from 'utils/i18n';
+import Layout from './Layout.astro';
+
+export interface Props {
+  title: string;
+}
+
+export async function getStaticPaths() {
+  return supportedLanguages.map(lang => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <slot />
+</Layout>
+
+<style></style>

@@ -1,0 +1,28 @@
+---
+import GeneralLayout from 'layouts/GeneralLayout.astro';
+
+const { lang } = Astro.params;
+
+// import { supportedLanguages } from 'utils/i18n';
+
+// export async function getStaticPaths() {
+//   return supportedLanguages.map(lang => ({
+//     params: { lang },
+//     props: { lang },
+//   }));
+// }
+---
+
+<GeneralLayout title="Home">
+  <div id="container">
+    <div>HOME {lang}</div>
+    <div>Current language: {Astro.props}</div>
+  </div>
+</GeneralLayout>
+
+<style>
+  #container {
+    font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+    height: 100%;
+  }
+</style>
