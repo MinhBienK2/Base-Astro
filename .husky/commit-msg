@@ -1,0 +1,4 @@
+#!/bin/sh
+exec < /dev/tty 
+
+npx --no-install commitlint --edit "$1"
