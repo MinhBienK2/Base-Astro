@@ -32,7 +32,7 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
       rules: {
-        'prettier/prettier': ['warn', prettierOptions],
+        'prettier/prettier': 'off',
       },
     },
     {
