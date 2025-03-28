@@ -1,4 +1,32 @@
-export const supportedLanguages = ['en', 'es', 'pt', 'jp', 'vn', 'th', 'id', 'tw'];
+export enum Language {
+  en = 'en',
+  es = 'es',
+  pt = 'pt',
+  jp = 'jp',
+  vn = 'vn',
+  th = 'th',
+  id = 'id',
+  hk = 'hk',
+  tw = 'tw',
+}
+
+export const supportedLanguages: Language[] = [
+  Language.en,
+  Language.es,
+  Language.pt,
+  Language.jp,
+  Language.vn,
+  Language.th,
+  Language.id,
+  Language.hk,
+  Language.tw,
+];
+
+export function getSupportedLanguages(langExclude?: Language[]) {
+  if (!langExclude?.length) return supportedLanguages;
+
+  return supportedLanguages.filter(l => !langExclude?.some(le => le === l));
+}
 
 export async function languageStaticPaths() {
   return supportedLanguages.map(lang => ({
@@ -6,12 +34,3 @@ export async function languageStaticPaths() {
     props: { lang },
   }));
 }
-
-// export function getTranslations(lang) {
-// // Fallback nếu không tìm thấy ngôn ngữ
-// try {
-//   return import(`../locales/${lang}.json`).then(m => m.default);
-// } catch {
-//   return import(`../locales/en.json`).then(m => m.default);
-// }
-// }

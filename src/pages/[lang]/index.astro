@@ -1,24 +1,23 @@
 ---
-import GeneralLayout from 'layouts/GeneralLayout.astro';
+import Layout from 'layouts/Layout.astro';
+import { getSupportedLanguages, Language } from 'utils/i18n';
 
 const { lang } = Astro.params;
 
-// import { supportedLanguages } from 'utils/i18n';
-
-// export async function getStaticPaths() {
-//   return supportedLanguages.map(lang => ({
-//     params: { lang },
-//     props: { lang },
-//   }));
-// }
+export async function getStaticPaths() {
+  return getSupportedLanguages([Language.id]).map(lang => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
 ---
 
-<GeneralLayout title="Home">
+<Layout title="Home">
   <div id="container">
     <div>HOME {lang}</div>
     <div>Current language: {Astro.props}</div>
   </div>
-</GeneralLayout>
+</Layout>
 
 <style>
   #container {
