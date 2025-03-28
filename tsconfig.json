@@ -18,7 +18,9 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@assets/*": ["assets/*"],
-    }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
