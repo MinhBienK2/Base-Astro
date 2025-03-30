@@ -1,6 +1,5 @@
 ---
 import { t, changeLanguage } from 'i18next';
-
 import Layout from 'layouts/Layout.astro';
 import { getSupportedLanguages } from 'utils/i18n';
 import { Language } from 'common/constants';
@@ -11,20 +10,20 @@ export async function getStaticPaths() {
     props: {},
   }));
 }
-
 interface Props {
   lang?: string;
 }
-
 const { lang } = Astro.params;
-
 changeLanguage(lang);
+
+const current = new Date();
 ---
 
 <Layout title="Home" lang={lang}>
   <div id="container">
-    <div>HOME {lang}</div>
-    <div>{t('site.title')}</div>
+    <div class="change-color">HOME {lang}</div>
+    <div>{t('home:site.title')}</div>
+    <p>Current time: {current.toLocaleTimeString()}</p>
   </div>
 </Layout>
 
@@ -32,5 +31,9 @@ changeLanguage(lang);
   #container {
     font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
     height: 100%;
+  }
+
+  .change-color {
+    color: var(--primary-4);
   }
 </style>

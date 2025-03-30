@@ -1,11 +1,9 @@
 ---
-import { changeLanguage } from 'i18next';
+import { changeLanguage } from "i18next";
+import { Language } from "common/constants";
+import HomePage from "./[lang]/index.astro";
 
-import { Language } from 'common/constants';
-
-import HomePage from './[lang]/index.astro';
-
-changeLanguage(Language.en);
+changeLanguage("en");
 ---
 
 <HomePage />;

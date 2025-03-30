@@ -6,4 +6,6 @@ import { supportedLanguages } from './src/common/constants.ts';
 export default {
   defaultLocale: 'en',
   locales: supportedLanguages,
+  namespaces: ['home', 'about'],
+  defaultNamespace: 'home',
 };
