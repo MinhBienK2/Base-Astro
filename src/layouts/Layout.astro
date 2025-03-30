@@ -1,15 +1,18 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import i18next from 'i18next';
+import { LanguageSelector } from 'astro-i18next/components';
 
 export interface Props {
   title: string;
+  lang: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={i18next.language}>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -21,20 +24,21 @@ const { title } = Astro.props;
     <link rel="sitemap" href={`${import.meta.env.BASE_URL}sitemap-index.xml`} />
     <link rel="alternate" type="application/rss+xml" title="RSS" href={`${import.meta.env.BASE_URL}rss.xml`} />
     <meta name="generator" content={Astro.generator} />
+    <!-- style -->
+    <link rel="stylesheet" href={`${import.meta.env.BASE_URL}styles/fonts.css`} />
+    <link rel="stylesheet" href={`${import.meta.env.BASE_URL}styles/global-styles.css`} />
+    <link rel="stylesheet" href={`${import.meta.env.BASE_URL}styles/variables.css`} />
+
     <title>{title}</title>
     <meta name="description" content="Minimal Astro starter" />
+
     <ClientRouter />
   </head>
   <body>
+    <LanguageSelector />
+
     <slot />
   </body>
 </html>
 
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
+<style></style>

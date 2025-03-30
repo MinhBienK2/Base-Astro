@@ -1,0 +1,53 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  font-family: 'Intel Clear', sans-serif;
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+}
+*::-webkit-scrollbar-thumb {
+  width: 0px;
+}
+*::-webkit-scrollbar-track {
+  width: 0px;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  line-height: 1.3;
+  font-family: 'Intel Clear', sans-serif;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
+}
+
+p,
+label {
+  font-family: 'Intel Clear', sans-serif;
+}
+
+input,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}

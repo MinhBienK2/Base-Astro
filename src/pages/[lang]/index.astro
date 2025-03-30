@@ -1,21 +1,30 @@
 ---
-import Layout from 'layouts/Layout.astro';
-import { getSupportedLanguages, Language } from 'utils/i18n';
+import { t, changeLanguage } from 'i18next';
 
-const { lang } = Astro.params;
+import Layout from 'layouts/Layout.astro';
+import { getSupportedLanguages } from 'utils/i18n';
+import { Language } from 'common/constants';
 
 export async function getStaticPaths() {
   return getSupportedLanguages([Language.id]).map(lang => ({
     params: { lang },
-    props: { lang },
+    props: {},
   }));
 }
+
+interface Props {
+  lang?: string;
+}
+
+const { lang } = Astro.params;
+
+changeLanguage(lang);
 ---
 
-<Layout title="Home">
+<Layout title="Home" lang={lang}>
   <div id="container">
     <div>HOME {lang}</div>
-    <div>Current language: {Astro.props}</div>
+    <div>{t('site.title')}</div>
   </div>
 </Layout>
 
