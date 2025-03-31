@@ -1,0 +1,48 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props as Props;
+---
+
+<Layout title={title}>
+  <slot />
+</Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // eslint-disable-next-line prettier/prettier
+    const lazyImages = document.querySelectorAll('.lazy-load');
+    const options = {
+      root: null,
+      rootMargin: '0px 0px 50px 0px',
+      threshold: 0,
+    };
+
+    const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const lazyImage = entry.target;
+          const src = lazyImage.dataset.src;
+
+          if (lazyImage.tagName.toLowerCase() === 'img') {
+            lazyImage.src = src;
+          } else {
+            lazyImage.style.backgroundImage = "url('" + src + "')";
+          }
+
+          observer.unobserve(lazyImage);
+        }
+      });
+    }, options);
+
+    lazyImages.forEach(lazyImage => {
+      lazyImageObserver.observe(lazyImage);
+    });
+  });
+</script>
+
+<style></style>
