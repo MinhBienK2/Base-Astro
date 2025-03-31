@@ -21,3 +21,5 @@ export const supportedLanguages: Language[] = [
   Language.hk,
   Language.tw,
 ];
+
+export const lazyLoadImgClass = 'lazy-load-img';

@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import { lazyLoadImgClass } from 'common/constants';
 
 interface Props {
   title: string;
@@ -12,10 +13,26 @@ const { title } = Astro.props as Props;
   <slot />
 </Layout>
 
-<script is:inline>
+<script define:vars={{ lazyLoadImgClass }}>
   document.addEventListener('DOMContentLoaded', () => {
-    // eslint-disable-next-line prettier/prettier
-    const lazyImages = document.querySelectorAll('.lazy-load');
+    const lazyImages = document.querySelectorAll('.' + lazyLoadImgClass);
+    if (!lazyImages.length) return;
+
+    const isSearchEngineBot = detectSearchEngineBots();
+    if (isSearchEngineBot) {
+      fallbackLazyLoad(lazyImages);
+      return;
+    }
+
+    if (
+      (!'IntersectionObserver') in window &&
+      (!'IntersectionObserverEntry') in window &&
+      (!'intersectionRatio') in window.IntersectionObserverEntry.prototype
+    ) {
+      fallbackLazyLoad(lazyImages);
+      return;
+    }
+
     const options = {
       root: null,
       rootMargin: '0px 0px 50px 0px',
@@ -26,13 +43,7 @@ const { title } = Astro.props as Props;
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const lazyImage = entry.target;
-          const src = lazyImage.dataset.src;
-
-          if (lazyImage.tagName.toLowerCase() === 'img') {
-            lazyImage.src = src;
-          } else {
-            lazyImage.style.backgroundImage = "url('" + src + "')";
-          }
+          setImage(lazyImage);
 
           observer.unobserve(lazyImage);
         }
@@ -43,6 +54,44 @@ const { title } = Astro.props as Props;
       lazyImageObserver.observe(lazyImage);
     });
   });
+
+  function detectSearchEngineBots() {
+    const searchEngineBots = [
+      'Googlebot',
+      'Bingbot',
+      'YandexBot',
+      'DuckDuckBot',
+      'Baiduspider',
+      'Slurp',
+      'Twitterbot',
+      'facebookexternalhit',
+      'LinkedInBot',
+      'Embedly',
+      'Discordbot',
+      'WhatsApp',
+    ];
+
+    const isSearchEngineBot = searchEngineBots.some(bot => navigator.userAgent.includes(bot));
+    return isSearchEngineBot;
+  }
+
+  function fallbackLazyLoad(Images) {
+    Images.forEach(img => {
+      setImage(img);
+    });
+  }
+
+  function setImage(image) {
+    const src = image.dataset.src;
+    if (!src) return;
+
+    const tagImage = 'img';
+    if (image.tagName.toLowerCase() === tagImage) {
+      image.src = src;
+    } else {
+      image.style.backgroundImage = "url('" + src + "')";
+    }
+  }
 </script>
 
 <style></style>
